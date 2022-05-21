@@ -1,33 +1,26 @@
 $(document).ready(function () {
 
-    $("#currentDay").text(moment().format("MMMM Do YYYY, h:mm:ss a"));
-    // listen for save button clicks
+    // Save button function and variables
     $('.saveBtn').on('click', function () {
-      // get nearby values
+      
       var value = $(this).siblings('.description').val();
       var time = $(this).parent().attr('id');
   
-      // save in localStorage
+      // Save item to local storage
       localStorage.setItem(time, value);
   
-      // Show notification that item was saved to localStorage by adding class 'show'
-      $('.notification').addClass('show');
-  
-      // Timeout to remove 'show' class after 5 seconds
-      setTimeout(function () {
-        $('.notification').removeClass('show');
-      }, 5000);
+    
     });
   
     function hourUpdater() {
-      // get current number of hours
+      // Set variable for current hour
       var currentHour = moment().hours();
   
-      // loop over time blocks
+      // Loop though time-block class
       $('.time-block').each(function () {
         var blockHour = parseInt($(this).attr('id').split('-')[1]);
   
-        // check if we've moved past this time
+        //Change class based on hour
         if (blockHour < currentHour) {
           $(this).addClass('past');
         } else if (blockHour === currentHour) {
@@ -43,10 +36,10 @@ $(document).ready(function () {
   
     hourUpdater();
   
-    // set up interval to check if current time needs to be updated
-    var interval = setInterval(hourUpdater, 15000);
+    // Set update interval for the hours 
+    var interval = setInterval(hourUpdater, 1000);
   
-    // load any saved data from localStorage
+    //Attatch front end to local storage
     $('#hour-9 .description').val(localStorage.getItem('hour-9'));
     $('#hour-10 .description').val(localStorage.getItem('hour-10'));
     $('#hour-11 .description').val(localStorage.getItem('hour-11'));
@@ -57,7 +50,7 @@ $(document).ready(function () {
     $('#hour-16 .description').val(localStorage.getItem('hour-16'));
     $('#hour-17 .description').val(localStorage.getItem('hour-17'));
   
-    // display current day on page
+    // Show date
     $('#currentDay').text(moment().format('dddd, MMMM Do'));
   });
   
